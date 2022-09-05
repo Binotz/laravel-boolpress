@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
@@ -43,6 +44,18 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $form_data = $request->all();
+        $new_post = new Post();
+
+        $request->validate($this->getValidationRules());
+        
+        $new_post->fill($form_data);
+        $new_post->slug = $this->getSlug(Str::slug($form_data['title'], '-'));
+
+        //dd($this->getSlug(Str::slug($form_data['title'], '-')));
+        $new_post->save();
+        
+        return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
 
     /**
@@ -94,4 +107,43 @@ class PostController extends Controller
     {
         //
     }
+
+    /******************************************* */
+    /*Custom Functions */
+    /******************************************* */
+
+    protected function getValidationRules(){
+        return [
+            'title' => 'required | max: 100',
+            'content' => 'required',
+        ];
+    }
+
+    protected function getSlug($slug_original){
+        $slug_base = $slug_original;
+
+        $slug_counter = 1;
+        
+        //controllo se lo slug esiste già
+        $slug_exists = Post::where('slug','=',$slug_original)->first();
+        
+        //se non esiste esco subito con lo slug passato
+        if(!$slug_exists){
+            return $slug_original;
+        }
+
+        //finché lo slug esiste...
+        while($slug_exists){
+            //... appendo allo slug base il counter..
+            $slug_to_insert = $slug_base . '-' . $slug_counter;
+            //... e controllo di nuovo se lo slug nuovo esiste
+            $slug_exists = Post::where('slug','=',$slug_to_insert)->first();
+            //incremento il counter
+            $slug_counter++;
+        }
+
+        return $slug_to_insert; 
+    }
+
+
 }

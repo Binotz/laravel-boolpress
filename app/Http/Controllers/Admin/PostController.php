@@ -31,6 +31,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -53,6 +54,11 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        $post = Post::findOrFail($id);
+        $data = [
+            'post' => $post,
+        ];
+        return view('admin.posts.show', $data);
     }
 
     /**

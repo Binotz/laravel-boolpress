@@ -83,6 +83,12 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $post = Post::findOrFail($id);
+        $data = [
+            'post' => $post,
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -95,7 +101,27 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
-    }
+            //recupero il post da modificare e lo valido
+            $new_post = $request->all();
+            $request->validate($this->getValidationRules() );
+
+            //recupero il post da modificare
+            $post_to_modify = Post::findOrFail($id);
+
+            //se il titolo tra i post è diverso, genero un nuovo slug...
+            if($post_to_modify->title !== $new_post['title']){
+                $new_post['slug'] = $this->getSlug(Str::Slug($post_to_modify, '-'));
+            } else {
+                //... se invece è uguale, lo mantengo uguale
+                $new_post['slug'] = $post_to_modify->slug;
+            }
+
+            //aggiorno il post
+            $post_to_modify->update($new_post);
+
+            //reindirizzo al dettaglio del post
+            return redirect()->route('admin.posts.show', ['post' => $post_to_modify->id]);
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -106,6 +132,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $post_to_delete = Post::findOrFail($id);
+        $post_to_delete->delete();
+        return redirect()->route('admin.posts.index');
+
     }
 
     /******************************************* */

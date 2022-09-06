@@ -8,7 +8,6 @@
                 <div class="card" >
                     <div class="card-body">
                       <h5 class="card-title">{{ $post->title }}</h5>
-                      
                       <a href="{{ route('admin.posts.show',['post' => $post->id]) }}" class="card-link">Dettagli Post</a>
                     </div>
                   </div>

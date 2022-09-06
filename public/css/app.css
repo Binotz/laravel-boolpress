@@ -12630,3 +12630,15 @@ fieldset:disabled .btn {
   margin-bottom: 1rem;
 }
 
+.post-layout .details {
+  margin-bottom: 1rem;
+}
+
+.post-layout .actions {
+  display: flex;
+}
+
+.post-layout .actions > * {
+  margin-right: 1rem;
+}
+

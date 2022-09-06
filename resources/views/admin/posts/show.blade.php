@@ -10,9 +10,9 @@
          <span>contenuto:</span>
          <p>{{$post->content}}</p>
          <span>Data scrittura:</span>
-         <h6>{{$post->created_at}}</h6>
+         <h6>{{$post->created_at->toFormattedDateString()}}</h6>
          <span>Data ultima modifica:</span>
-         <h6>{{$post->updated_at}}</h6>
+         <h6>{{$post->updated_at->toFormattedDateString()}}</h6>
       </div>
 
       <div class="actions">

@@ -13,6 +13,9 @@
          <h6>{{$post->created_at->toFormattedDateString()}}</h6>
          <span>Data ultima modifica:</span>
          <h6>{{$post->updated_at->toFormattedDateString()}}</h6>
+
+         <span>Categoria: </span>
+         <h6>{{ ($post->category) ? $post->category->name : 'Nessuna'}}</h6>
       </div>
 
       <div class="actions">

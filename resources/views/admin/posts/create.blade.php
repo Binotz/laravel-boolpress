@@ -19,6 +19,17 @@
             <label for="title" class="form-label">Titolo</label>
             <input type="text" class="form-control" placeholder="Max: 100 char" id="title" name="title" value="{{old('title')}}">
         </div>
+
+        <div class="mb-3">
+            <label for="category">Categoria: </label>
+            <select class="form-select" id="category" name="category_id">
+                <option value="0">Nessuna</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}" > </option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="content" class="form-label">Contenuto post:</label>
             <textarea type="text" class="form-control" id="content" name="content" cols="30" rows="10" >{{old('content')}}</textarea>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -33,7 +34,11 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
+        $data = [
+            'categories' => Category::all(),
+        ];
+        
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -88,6 +93,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $data = [
             'post' => $post,
+            'categories' => Category::all()
         ];
 
         return view('admin.posts.edit', $data);
@@ -148,6 +154,7 @@ class PostController extends Controller
         return [
             'title' => 'required | max: 100',
             'content' => 'required',
+            'category_id' => 'nullable'
         ];
     }
 

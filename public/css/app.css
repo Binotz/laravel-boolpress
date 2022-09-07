@@ -12634,6 +12634,10 @@ fieldset:disabled .btn {
   margin-bottom: 1rem;
 }
 
+.post-layout .details span {
+  margin-top: 1rem;
+}
+
 .post-layout .actions {
   display: flex;
 }

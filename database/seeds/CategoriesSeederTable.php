@@ -15,7 +15,6 @@ class CategoriesSeederTable extends Seeder
     {
         //
         $categories = [
-            'Novità',
             'Finanza',
             'Cucina',
             'Sport',

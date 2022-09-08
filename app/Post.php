@@ -16,7 +16,13 @@ class Post extends Model
     
     protected $table = 'posts';
 
+    //relazione 1toMany con Category
     public function category(){
         return $this->belongsTo('App\Category');
+    }
+
+    //relazione ManytoMany con Tag
+    public function tags(){
+        return $this->hasMany('App/Tag');
     }
 }

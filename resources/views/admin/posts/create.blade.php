@@ -36,7 +36,14 @@
         <span>Tags:</span>
         <br>
         @foreach ($tags as $tag)
-            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" id="tag-{{$tag->id}}" name="tag[]" >
+            <input 
+            class="form-check-input" 
+            type="checkbox" 
+            value="{{ $tag->id }}" 
+            id="tag-{{$tag->id}}" 
+            name="tags[]" 
+            {{ in_array($tag->id, old('tags',[])) ? 'checked' : '' }}
+            >
             <label class="form-check-label" for="tag-{{$tag->id}}" > {{$tag->name}} </label>
             
         @endforeach

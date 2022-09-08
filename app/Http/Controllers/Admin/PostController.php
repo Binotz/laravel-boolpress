@@ -104,9 +104,11 @@ class PostController extends Controller
     {
         //
         $post = Post::findOrFail($id);
+
         $data = [
             'post' => $post,
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'tags' => Tag::all(),
         ];
 
         return view('admin.posts.edit', $data);
@@ -139,6 +141,12 @@ class PostController extends Controller
 
             //aggiorno il post
             $post_to_modify->update($new_post);
+            //
+            if(isset($new_post['tags'])){
+                $post_to_modify->tags()->sync($new_post['tags']);
+            } else{
+                $post_to_modify->tags()->sync([]);
+            }
 
             //reindirizzo al dettaglio del post
             return redirect()->route('admin.posts.show', ['post' => $post_to_modify->id]);
@@ -153,6 +161,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $post_to_delete = Post::findOrFail($id)->tags()->sync([]);
         $post_to_delete = Post::findOrFail($id)->delete();
         //$post_to_delete->delete();
         return redirect()->route('admin.posts.index');

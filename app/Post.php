@@ -23,6 +23,6 @@ class Post extends Model
 
     //relazione ManytoMany con Tag
     public function tags(){
-        return $this->hasMany('App/Tag');
+        return $this->belongsToMany('App\Tag');
     }
 }

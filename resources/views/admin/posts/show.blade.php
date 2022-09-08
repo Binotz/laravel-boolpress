@@ -14,8 +14,16 @@
          <span>Data ultima modifica:</span>
          <h6>{{$post->updated_at->toFormattedDateString()}}</h6>
 
+
          <span>Categoria: </span>
          <h6>{{ ($post->category) ? $post->category->name : 'Nessuna'}}</h6>
+
+         <span>Tags: </span>
+         <h6> @forelse ($post->tags as $tag)
+            {{$tag->name}}{{ (!$loop->last) ? ', ' : ''}}
+         @empty
+             Nessuna
+         @endforelse </h6>
       </div>
 
       <div class="actions">

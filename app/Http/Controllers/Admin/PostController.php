@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -36,6 +37,7 @@ class PostController extends Controller
         //
         $data = [
             'categories' => Category::all(),
+            'tags' => Tag::all(),
         ];
         
         return view('admin.posts.create', $data);
@@ -58,8 +60,19 @@ class PostController extends Controller
         $new_post->fill($form_data);
         $new_post->slug = $this->getSlug(Str::slug($form_data['title'], '-'));
 
-        //dd($this->getSlug(Str::slug($form_data['title'], '-')));
+        // dd($form_data['tag']);
+
+        //creo il post, generando anche l'id del post...
         $new_post->save();
+
+        //... poi usando l'id vado a creare il record nella tabella ponte
+        //Se vengono applicate dei tag, li inserisco...
+        if(isset($form_data['tag'])){
+            $new_post->tags()->sync($form_data['tag']);
+        }else{
+            //.. altrimenti non li inserisco
+            $new_post->tags()->sync([]);
+        }
         
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }

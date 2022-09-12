@@ -12,7 +12,7 @@ class PostController extends Controller
     public function index(){
         $data = [
             'success' => true,
-            'results' => Post::all(),
+            'results' => Post::paginate(6),
         ];
 
         return response()->json($data);

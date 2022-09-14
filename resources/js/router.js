@@ -3,9 +3,10 @@ import AboutPage from './pages/AboutPage.vue';
 import BlogPage from './pages/BlogPage.vue';
 import HomePage from './pages/HomePage.vue';
 import NotFoundPage from './pages/NotFoundPage.vue';
+import SinglePostPage from './pages/SinglePostPage.vue';
 
 const router = new VueRouter({
-    mode: "history",
+    mode: 'history',
     routes: [
         {
             path: '/',
@@ -21,6 +22,11 @@ const router = new VueRouter({
             path: '/blog',
             name: "BlogRoute",
             component: BlogPage
+        },
+        {
+            path: '/blog/:slug',
+            name: "SinglePageRoute",
+            component: SinglePostPage
         },
         {
             path: '/*',

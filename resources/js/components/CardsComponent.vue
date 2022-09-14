@@ -3,14 +3,7 @@
         <!-- Cards -->
         <div class="row row-cols-3 g-4">
             <div class="col" v-for="post in posts" :key="post.id">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">
-                            {{ post.content }}
-                        </p>
-                    </div>
-                </div>
+                <CardComponent :post="post" />
             </div>
         </div>
 
@@ -58,6 +51,7 @@
 </template>
 
 <script>
+import CardComponent from "./CardComponent.vue";
 export default {
     name: "CardsComponents",
     data() {
@@ -75,7 +69,6 @@ export default {
             if (page >= this.pages) {
                 page = this.pages;
             }
-
             axios
                 .get("/api/posts", {
                     params: {
@@ -95,6 +88,7 @@ export default {
     mounted() {
         this.getPosts(1);
     },
+    components: { CardComponent },
 };
 </script>
 <style scoped>

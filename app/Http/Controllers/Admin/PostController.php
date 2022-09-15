@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Post;
 use App\Category;
@@ -57,14 +58,19 @@ class PostController extends Controller
 
         $request->validate($this->getValidationRules());
         
+        if(isset($form_data['cover'])){    
+            $image_path = Storage::put('covers', $form_data['cover']);
+            $form_data['cover'] = $image_path;
+        }
+
         $new_post->fill($form_data);
         $new_post->slug = $this->getSlug(Str::slug($form_data['title'], '-'));
 
-        // dd($form_data['tag']);
+        //dd($new_post);
 
         //creo il post, generando anche l'id del post...
         $new_post->save();
-
+        
         //... poi usando l'id vado a creare il record nella tabella ponte
         //Se vengono applicate dei tag, li inserisco...
         if(isset($form_data['tag'])){
@@ -126,6 +132,7 @@ class PostController extends Controller
         //
             //recupero il post da modificare e lo valido
             $new_post = $request->all();
+            //dd($new_post);
             $request->validate($this->getValidationRules() );
 
             //recupero il post da modificare
@@ -139,9 +146,13 @@ class PostController extends Controller
                 $new_post['slug'] = $post_to_modify->slug;
             }
 
+            //se viene passata l'immagine, la modifico nel db
+            if(isset($new_post['cover'])){
+                $new_post['cover'] = Storage::put('covers', $new_post['cover']);
+            }
             //aggiorno il post
             $post_to_modify->update($new_post);
-            //
+            
             if(isset($new_post['tags'])){
                 $post_to_modify->tags()->sync($new_post['tags']);
             } else{
@@ -162,8 +173,11 @@ class PostController extends Controller
     {
         //
         $post_to_delete = Post::findOrFail($id)->tags()->sync([]);
-        $post_to_delete = Post::findOrFail($id)->delete();
-        //$post_to_delete->delete();
+        $post_to_delete = Post::findOrFail($id);
+        if(isset($post_to_delete->cover)){
+            Storage::delete($post_to_delete->cover);
+        }
+        $post_to_delete->delete();
         return redirect()->route('admin.posts.index');
 
     }
@@ -176,7 +190,8 @@ class PostController extends Controller
         return [
             'title' => 'required | max: 100',
             'content' => 'required',
-            'category_id' => 'nullable'
+            'category_id' => 'nullable',
+            'cover' => 'image | nullable'
         ];
     }
 

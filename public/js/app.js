@@ -5192,9 +5192,7 @@ __webpack_require__.r(__webpack_exports__);
           page: page
         }
       }).then(function (res) {
-        //posts + data pagination data
         var posts = res.data.results;
-        console.log(posts);
         _this.posts = posts.data;
         _this.currentPage = posts.current_page;
         _this.pages = posts.last_page;
@@ -5690,7 +5688,14 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "post-details"
-  }, [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("div", {
+  }, [_c("h1", {
+    staticClass: "text-center"
+  }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _vm.post.cover != "http://localhost:8000/storage" ? _c("img", {
+    attrs: {
+      src: _vm.post.cover,
+      alt: _vm.post.title
+    }
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "mb-4"
   }, [_c("h6", [_vm._v("Categorie:")]), _vm._v(" "), _vm.post.category ? _c("span", [_vm._v(" " + _vm._s(_vm.post.category.name) + " ")]) : _c("span", [_vm._v(" Nessuna")])]), _vm._v(" "), _c("div", {
     staticClass: "mb-4"

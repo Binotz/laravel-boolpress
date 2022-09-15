@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<form action="{{ route('admin.posts.update', ['post'=>$post->id]) }}" method="post">
+<form action="{{ route('admin.posts.update', ['post'=>$post->id]) }}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -47,6 +47,12 @@
         >
         <label class="form-check-label" for="tag-{{$tag->id}}" > {{$tag->name}} </label>
     @endforeach
+
+    {{-- Cover --}}
+    <div class="mb-3">
+        <label for="image_file" class="form-label">Modifica cover:</label>
+        <input class="form-control" type="file" id="image_file" name="cover">
+    </div>
 
     {{-- Contenuto --}}
     <div class="mb-3">

@@ -21,7 +21,9 @@ class PostController extends Controller
     public function show($slug){
 
         $query = Post::where('slug','=',$slug)->with(['tags','category'])->first();
-
+        //sistemo il link della cover
+        $query['cover'] = asset('storage/' . $query['cover']);
+        
         if ($query) {
             $response = $query;
             $success = true;
@@ -34,6 +36,7 @@ class PostController extends Controller
             'success' => $success,
             'response' => $response,
         ];
+
         return response()->json($data);
     }
 }

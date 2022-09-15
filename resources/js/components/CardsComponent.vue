@@ -76,9 +76,7 @@ export default {
                     },
                 })
                 .then((res) => {
-                    //posts + data pagination data
                     const posts = res.data.results;
-                    console.log(posts);
                     this.posts = posts.data;
                     this.currentPage = posts.current_page;
                     this.pages = posts.last_page;

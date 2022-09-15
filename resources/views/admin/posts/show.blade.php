@@ -2,28 +2,45 @@
 
 @section('content')  
    <div class="post-layout">
-      <div class="details">        
-         <span>Titolo:</span>
-         <h1>{{$post->title}}</h1>
-         <span>Slug:</span>
-         <p>{{$post->slug}}</p>
-         <span>contenuto:</span>
-         <p>{{$post->content}}</p>
-         <span>Data scrittura:</span>
-         <h6>{{$post->created_at->toFormattedDateString()}}</h6>
-         <span>Data ultima modifica:</span>
-         <h6>{{$post->updated_at->toFormattedDateString()}}</h6>
-
-
-         <span>Categoria: </span>
-         <h6>{{ ($post->category) ? $post->category->name : 'Nessuna'}}</h6>
-
-         <span>Tags: </span>
-         <h6> @forelse ($post->tags as $tag)
-            {{$tag->name}}{{ (!$loop->last) ? ', ' : ''}}
-         @empty
-             Nessuna
-         @endforelse </h6>
+      <div class="details">   
+         
+         <div>
+            <span>Titolo:</span>
+            <h1>{{$post->title}}</h1>
+         </div>
+         <div>
+            <img src="{{ asset('storage/' . $post['cover']) }}" alt="cover" class="w-50">
+         </div>
+         <div>
+            <span>Slug:</span>
+            <p>{{$post->slug}}</p>
+         </div>
+         <div>         
+            <span>contenuto:</span>
+            <p>{{$post->content}}</p>
+         </div>
+         <div>
+            <span>Data scrittura:</span>
+            <h6>{{$post->created_at->toFormattedDateString()}}</h6>
+         </div>
+         <div>
+            <span>Data ultima modifica:</span>
+            <h6>{{$post->updated_at->toFormattedDateString()}}</h6>
+         </div>
+         <div>
+            <span>Categoria: </span>
+            <h6>{{ ($post->category) ? $post->category->name : 'Nessuna'}}</h6>
+         </div>
+         <div>
+            <span>Tags: </span>
+            <h6> 
+               @forelse ($post->tags as $tag)
+               {{$tag->name}}{{ (!$loop->last) ? ', ' : ''}}
+               @empty
+                  Nessuna
+               @endforelse 
+            </h6>
+         </div>
       </div>
 
       <div class="actions">

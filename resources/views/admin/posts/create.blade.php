@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="{{ route('admin.posts.store') }}" method="post">
+    <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
 
@@ -33,22 +33,28 @@
         </div>
 
         {{-- Tags --}}
-        <span>Tags:</span>
-        <br>
-        @foreach ($tags as $tag)
-            <input 
-            class="form-check-input" 
-            type="checkbox" 
-            value="{{ $tag->id }}" 
-            id="tag-{{$tag->id}}" 
-            name="tags[]" 
-            {{ in_array($tag->id, old('tags',[])) ? 'checked' : '' }}
-            >
-            <label class="form-check-label" for="tag-{{$tag->id}}" > {{$tag->name}} </label>
-            
-        @endforeach
+        <div class="mb-3">
+            <span>Tags:</span>
+            <br>
+            @foreach ($tags as $tag)
+                <input 
+                class="form-check-input" 
+                type="checkbox" 
+                value="{{ $tag->id }}" 
+                id="tag-{{$tag->id}}" 
+                name="tags[]" 
+                {{ in_array($tag->id, old('tags',[])) ? 'checked' : '' }}
+                >
+                <label class="form-check-label" for="tag-{{$tag->id}}" > {{$tag->name}} </label>
+                
+            @endforeach
+        </div>
 
-
+        {{-- Cover --}}
+        <div class="mb-3">
+            <label for="image_file" class="form-label">Carica cover:</label>
+            <input class="form-control" type="file" id="image_file" name="cover">
+        </div>
 
         {{-- Contenuto post --}}
         <div class="mb-3">

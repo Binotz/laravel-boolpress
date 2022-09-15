@@ -1,7 +1,11 @@
 <template>
     <div class="post-details">
-        <h1>{{ post.title }}</h1>
-
+        <h1 class="text-center">{{ post.title }}</h1>
+        <img
+            v-if="post.cover != 'http://localhost:8000/storage'"
+            :src="post.cover"
+            :alt="post.title"
+        />
         <!-- Categorie -->
         <div class="mb-4">
             <h6>Categorie:</h6>

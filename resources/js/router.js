@@ -1,6 +1,7 @@
 import VueRouter from "vue-router";
 import AboutPage from './pages/AboutPage.vue';
 import BlogPage from './pages/BlogPage.vue';
+import ContactUsPage from './pages/ContactUsPage.vue';
 import HomePage from './pages/HomePage.vue';
 import NotFoundPage from './pages/NotFoundPage.vue';
 import SinglePostPage from './pages/SinglePostPage.vue';
@@ -27,6 +28,11 @@ const router = new VueRouter({
             path: '/blog/:slug',
             name: "SinglePageRoute",
             component: SinglePostPage
+        },
+        {
+            path: '/contact-us',
+            name: "ContactUsRoute",
+            component: ContactUsPage
         },
         {
             path: '/*',

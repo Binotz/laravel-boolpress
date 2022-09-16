@@ -25,6 +25,10 @@ export default {
                     link: "/blog",
                     name: "Blog",
                 },
+                {
+                    link: "/contact-us",
+                    name: "Contattaci",
+                },
             ],
         };
     },
